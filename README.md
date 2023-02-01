@@ -14,11 +14,10 @@ Please provide the YouTube link to your [Video Demo](https://youtu.be/UxfT_eHzWs
 ## Compilation Instructions
 
  g++ -o main main.cpp amove.cpp attributes.cpp board.cpp csetting.cpp direction.cpp command.cpp help.cpp helper.cpp implementing.cpp
- .\main
-   
    OR
-   
  g++ *.cpp -o main
+  
+  THEN
  .\main
 
 ## User Manual
