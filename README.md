@@ -13,12 +13,11 @@ Please provide the YouTube link to your [Video Demo](https://youtu.be/UxfT_eHzWs
 
 ## Compilation Instructions
 
- g++ -o main main.cpp amove.cpp attributes.cpp board.cpp csetting.cpp direction.cpp command.cpp help.cpp helper.cpp implementing.cpp
+1.g++ -o main main.cpp amove.cpp attributes.cpp board.cpp csetting.cpp direction.cpp command.cpp help.cpp helper.cpp implementing.cpp
    OR
- g++ *.cpp -o main
+  g++ *.cpp -o main
   
-  THEN
- .\main
+2. .\main
 
 ## User Manual
 
