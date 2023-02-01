@@ -15,7 +15,9 @@ Please provide the YouTube link to your [Video Demo](https://youtu.be/UxfT_eHzWs
 
 1. g++ -o main main.cpp amove.cpp attributes.cpp board.cpp csetting.cpp direction.cpp command.cpp help.cpp helper.cpp implementing.cpp
 2. .\main
-    OR
+   
+   OR
+   
 1. g++ *.cpp -o main
 2. .\main
 
