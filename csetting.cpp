@@ -7,18 +7,16 @@ int checkOdd(int x)
 	return (x % 2 != 0);
 }
 
-void Game::changeSetting(int& numOfZombie)
+void Game::changeSetting()
 {
 	ClearScreen();
 	
 	char yn;
-	int srow;
-	int scolumn;
-	int szombie;
+	int srow, scolumn, szombie;
 	
-	rows = 3;
-	columns = 19;
-	numOfZombie = 2;
+	rows = 5;
+	columns = 17;
+	numOfZombie = 3;
 	
 	cout << "Default Game Setting" << endl;
 	cout << "------------------------" << endl;
@@ -41,6 +39,7 @@ void Game::changeSetting(int& numOfZombie)
 		}
 		rows = srow;
 		
+		cout << endl;
 		cout << "Enter columns -> "; cin >> scolumn;
 		while (!checkOdd(scolumn))
 		{
@@ -53,8 +52,14 @@ void Game::changeSetting(int& numOfZombie)
 		cout << "Zombie Settings" << endl;
 		cout << "------------------" << endl;
 		cout << "Enter Zombie -> "; cin >> szombie;
+		while (szombie < 1 || szombie > 9)
+		{
+			cout << "Invalid input! Please enter number between 1 to 9!" << endl;
+			cout << "Enter zombie number -> "; cin >> szombie;
+		}
 		numOfZombie = szombie;
 		
+		cout << endl;
 		Pause();
 	}	
 }
