@@ -7,17 +7,15 @@ Before getting into the gmae, user have the chance to change the number of rows,
 Inside the game, user are free to move up, down, left or right by typing out the command.
 User can plan their by ways by changing the direction of the arrow before being killed by the zombie.
 To let the game more interesting, pod(cause damage to zombie), health(add Alien's health) 
-and rock(gives out random object) will be added to the game.
+and rock(gives out random object) added to the game. Besides that, freeze(all zombie cannot move for one round) and
+shuffle(all game being shuffled exluding zombie and alien) have make the game more fun.
 
 Please provide the YouTube link to your [Video Demo](https://youtu.be/UxfT_eHzWsQ).
 
 ## Compilation Instructions
 
-- g++ -o main main.cpp amove.cpp attributes.cpp board.cpp csetting.cpp direction.cpp command.cpp help.cpp helper.cpp implementing.cpp
--  OR
-- g++ *.cpp -o main
-  
-- .\main
+1. g++ *.cpp -o main
+2. .\main
 
 ## User Manual
 
@@ -31,17 +29,17 @@ Enter ‘help’ to look for the command.
 Giving an incorrext command, will also lead you to the command list
 
 Command list: 
-up      :  Move up
-down    :  Move down
-left    :  Move left
-right   :  Move right
-arrow   :  Change direction of an arrow
-shuffle :  Shuffle board
-freeze  :  Freeze all Zombie
-help    :  Display command list
-save    :  Save game
-load    :  Load previous game
-quit    :  Quit game
+up      : Move up
+down    : Move down
+left    : Move left
+right   : Move right
+arrow   : Change direction of an arrow
+shuffle : Shuffle objects in the board(alien and zombie excluded)
+freeze  : All zombie will not move for one round
+help    : Display command list
+save    : Save game           
+load    : Load previous game  
+quit    : Quit game
 
 3. Game object:
 
@@ -56,12 +54,14 @@ Zombie  : any integer
 4. How to play:
 - Enter up, down, left, right to control the movement of the Alien(A).
 - When the Alien finds an arrow( ^, v, <, >), its attack will increase by 20.
+- When the Alien finds a pod(p), it will cause 10 damages to the nearest zombie.
+- When the Alien finds a health pack(h), it will increase Alien's health by 10.
+- When the Alien finds a rock(r), it will stop and give out a random object.
 - When the Alien hits the border, it will stop.
-- When the Alien finds a new object(h, p, r) it will stop.
+- Freeze the zombie when Alien does not want to receive damage from Zombie for one round.
+- Shuffle the game board when you want to the object on the board.
 - Enter row, column and direction to change the direction of the arrow to the direction that you want.
-- Enter freeze to pause the zombie movement.
-- Enter shuffle to shuffle object inside the board.
-- Enter save to save the game.
+- Enter 'y' if you wish to replay at the end of the game.
 - Enter quit to quit the game.
 
 Please DO NOT change the Progress Log below. Leave it as it is.
