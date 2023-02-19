@@ -10,7 +10,7 @@ To let the game more interesting, pod(cause damage to zombie), health(add Alien'
 and rock(gives out random object) added to the game. Besides that, freeze(all zombie cannot move for one round) and
 shuffle(all game being shuffled exluding zombie and alien) have make the game more fun.
 
-Please provide the YouTube link to your [Video Demo](https://youtu.be/UxfT_eHzWsQ).
+Please provide the YouTube link to your [Video Demo](https://www.youtube.com/watch?v=nOr-Q1nZkvk).
 
 ## Compilation Instructions
 
