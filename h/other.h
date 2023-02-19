@@ -6,38 +6,70 @@
 
 class Game 
 {
-public:
-    int rows, columns, numOfZombie;
-	std::string kcommand;
-	char nextObject;
-	
-	void objects(const int& numOfZombie, std::vector< std::vector<char> >& boards);
-    void displayBoard(std::vector< std::vector<char> >& boards);
-    void changeDirection(std::vector< std::vector<char> >& boards);
-	void changeSetting(int& numOfZombie);
-	bool hitBorder(int x, int y, std::vector< std::vector<char> >& boards);
+	private:
+		std::vector< std::vector<char> > boards;
+		int rows, columns, numOfZombie, numOfMove;
+		int corY, corX, newY, newX, zombieY, zombieX;
+		int numberRemain;
+		std::string kcommand;
+		char nextObject, storeArrow, turn;
+		bool pass = false;
+		bool win = false;
+		bool lose = false;
+		bool replay = false;
+		bool freeze = false;
+		int attributesValue[][3];		// life 0, attack 1, range 2
 
+	public:	
+		void run();
+		void result();
+		void newScreen();
+		void objects();
+		void displayBoard();
+		void changeDirection();
+		bool validRow(int changeRow);
+		bool validColumn(int changeColumn);
+		bool isArrow(int changeRow, int changeColumn);
+		void changeSetting();
+		bool hitBorder();
+		void checkObject();
+		void commandDirection();
+		void command();
+		void setAttributes();
+		void attributes();
+		void up();
+		void down();
+		void left();
+		void right();
+		void movingAlien();
+		void movingZombie();
+		void addAttack();
+		void addHealth();
+		void rock();
+		void pod();
+		int nearest();
+		void alienLocate();
+		void checkZombie(int (&zombieCoordinate)[][3]);
+		void zombieMove();
+		void alienAttack();
+		void zombieAttack();
+		void zombieLocate();
+		void trail();
+		void attackReset();
+		void removeZombie(char zombieToRemove);
+		void zombieRemain();
+		void victory();
+		void gameEnd();
+		void shuffle();
+		void calculateMove();
+		void help();
+		void save();
+		void load();
 };
 
 int ClearScreen();
 int Pause();
-void help();
-void setAttributes(const int& numOfZombie, int (&attributesValue)[][3]);
-void attributes(const int& numOfZombie, const int attributesValue[][3]);
 int checkOdd(int x);
-void command(char& storeArrow,char &nextObject, 
-			 int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-void commandDirection(char& storeArrow, char nextObject, std::string kcommand, 
-                      int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-void checkObject(char& storeArrow, char &nextObject, 
-				 int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-void checkAlien(int& y, int& x, std::vector< std::vector<char> >& boards);
-char up(char &nextObject, int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-char down(char &nextObject, int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-char left(char &nextObject, int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-char right(char &nextObject, int (&attributesValue)[][3], std::vector< std::vector<char> >& boards);
-void addAttack(int (&attributesValue)[][3]);
-void stillImplementing();
 
 
 #endif
