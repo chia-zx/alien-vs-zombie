@@ -10,39 +10,14 @@
 
 #include "h/other.h"
 #include <iostream>
-#include <vector>
 #include <ctime>
 using namespace std;
 
 int main()
 {
-    // srand(1);
-    srand(time(NULL));
-	
-	vector < vector<char> > boards;
+    srand(101);
+    // srand(time(NULL));
 
-    Game game;
-	
-	int numOfZombie = game.numOfZombie;
-	
-	game.changeSetting(numOfZombie);	
-	game.objects(numOfZombie, boards);
-	
-	int attributesValue[numOfZombie + 1][3];		// life 0, attack 1, range 2
-	setAttributes(numOfZombie, attributesValue);
-	char nextObject, storeArrow;
-	
-    do 
-	{
-		game.displayBoard(boards);
-		if (nextObject != '\0' && nextObject != 'r' && nextObject != 'h' && nextObject != 'p' && !isdigit(nextObject))
-		{
-			checkObject(storeArrow, nextObject, attributesValue, boards);
-		}
-		else
-		{
-			attributes(numOfZombie, attributesValue);
-			command(storeArrow, nextObject, attributesValue, boards);
-		}
-	} while(game.kcommand != "quit");	
+	Game game;
+	game.run();
 }
