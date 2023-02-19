@@ -1,9 +1,13 @@
 #include "h/other.h"
 #include <iostream>
-#include <vector>
 using namespace std;
 
-void checkAlien(int& y, int& x, vector < vector<char> >& boards)
+bool Game::hitBorder()
+{
+	return (!((newY > -1) && (newY < rows))) || (!((newX > -1) && (newX < columns)));
+}
+
+void Game::alienLocate()
 {	
 	for(int i = 0; i < boards.size(); ++i)
 	{
@@ -11,168 +15,177 @@ void checkAlien(int& y, int& x, vector < vector<char> >& boards)
 		{
 			if (boards[i][j] == 'A')
 			{
-				y = i;
-				x = j;
+				corY = i;
+				corX = j;
 				break;
 			}
 		}
 	}
 }
 
-void addAttack(int (&attributesValue)[][3])
+void Game::movingZombie()
 {
-	int currentAttack, newAttack;
-	currentAttack = attributesValue[0][1];
-	newAttack = currentAttack + 20;
-	attributesValue[0][1] = newAttack;
-}
-
-bool Game::hitBorder(int x, int y, vector < vector<char> >& boards)
-{
-	int nrow = boards.size();
-	int ncolumn = boards[0].size();
-	return (!((y > -1) && (y < nrow))) || (!((x > -1) && (x < ncolumn)));
-}
-
-char right(char &nextObject, int (&attributesValue)[][3], vector < vector<char> >& boards)
-{
-	Game game;
-
-	int y, x;
-	checkAlien(y, x, boards);
-	int newX = x + 1;
-
-	if (game.hitBorder(newX, y, boards))
+	if (hitBorder())
 	{
-		nextObject = '\0';		// set to null
+		nextObject = '!';		// set to !
+		newScreen();
+		cout << "Zombie " << turn << " hits the border !" << endl;
 	}
 	else
 	{
-		boards[y][x] = '.';
-		nextObject = boards[y][newX];
-		boards[y][newX] = 'A';
+		nextObject = boards[newY][newX];
+		if (isdigit(nextObject))
+		{
+			newScreen();
+			cout << "Zombie " << nextObject << " already there !" << endl;
+		}
+		else if (nextObject == 'A')
+		{
+			newScreen();
+			cout << "Alien there !" << endl;
+		}
+		else	
+		{
+			boards[zombieY][zombieX] = ' ';
+			boards[newY][newX] = turn;
+		}
 	}
-
-	return nextObject;
-}
-
-char left(char &nextObject, int (&attributesValue)[][3], vector < vector<char> >& boards)
-{
-	Game game;
-
-	int y, x;
-	checkAlien(y, x, boards);
-	int newX = x - 1;
 	
-	if (game.hitBorder(newX, y, boards))
+	zombieAttack();
+	newScreen();
+	cout << "Zombie " << turn << "'s turn end." << endl;
+	cout << endl; 
+	Pause();
+}
+
+void Game::movingAlien()
+{
+	if (hitBorder())
 	{
-		nextObject = '\0';		// set to null
+		nextObject = '!';		// set to !
 	}
 	else
 	{
-		boards[y][x] = '.';
-		nextObject = boards[y][newX];
-		boards[y][newX] = 'A';
+		nextObject = boards[newY][newX];
+		if (nextObject == 'r')
+		{
+			rock();
+		}
+		else if (isdigit(nextObject))
+		{
+			alienAttack();
+		}
+		else
+		{
+			boards[corY][corX] = '.';
+			boards[newY][newX] = 'A';
+		}
 	}
-
-	return nextObject;
-}
-
-char down(char &nextObject, int (&attributesValue)[][3], vector < vector<char> >& boards)
-{
-	Game game;
-
-	int y, x;
-	checkAlien(y, x, boards);
-	int newY = y + 1;
 	
-	if (game.hitBorder(x, newY, boards))
+}
+
+void Game::right()
+{
+	if (turn == 'A')
 	{
-		nextObject = '\0';		// set to null
+		alienLocate();
+		newY = corY;
+		newX = corX + 1;
+		movingAlien();
 	}
 	else
 	{
-		boards[y][x] = '.';
-		nextObject = boards[newY][x];
-		boards[newY][x] = 'A';
+		zombieLocate();
+		newY = zombieY;
+		newX = zombieX + 1;
+		movingZombie();
 	}
-
-	return nextObject;
 }
 
-char up(char &nextObject, int (&attributesValue)[][3], vector < vector<char> >& boards)
+void Game::left()
 {
-	Game game;
-
-	int y, x;
-	checkAlien(y, x, boards);
-	int newY = y - 1;
-	
-	if (game.hitBorder(x, newY, boards))
+	if (turn == 'A')
 	{
-		nextObject = '\0';		// set to null
+		alienLocate();
+		newY = corY;
+		newX = corX - 1;
+		movingAlien();
 	}
 	else
 	{
-		boards[y][x] = '.';
-		nextObject = boards[newY][x];
-		boards[newY][x] = 'A';
+		zombieLocate();
+		newY = zombieY;
+		newX = zombieX - 1;
+		movingZombie();
 	}
-	return nextObject;
 }
 
-void checkObject(char& storeArrow, char &nextObject, int (&attributesValue)[][3], vector < vector<char> >& boards)
+void Game::down()
 {
-	Game game;
+	if (turn == 'A')
+	{
+		alienLocate();
+		newY = corY + 1;
+		newX = corX;
+		movingAlien();
+	}
+	else
+	{
+		zombieLocate();
+		newY = zombieY + 1;
+		newX = zombieX;
+		movingZombie();
+	}
+}
 
+void Game::up()
+{
+	if (turn == 'A')
+	{
+		alienLocate();
+		newY = corY - 1;
+		newX = corX;
+		movingAlien();
+	}
+	else
+	{
+		zombieLocate();
+		newY = zombieY - 1;
+		newX = zombieX;
+		movingZombie();
+	}
+}
+
+void Game::checkObject()
+{
 	do 
 	{
-		if (nextObject == '^')
+		if (win || lose)
 		{
-			cout << "Alien finds an ^ arrow " << endl;
-			cout << "Alien's attack is increased by 20 " << endl;
-			addAttack(attributesValue);
-			nextObject = up(nextObject, attributesValue, boards);
-			if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
-			{
-				storeArrow = '^';
-			}
+			break;
 		}
-		else if (nextObject == 'v')
+		
+		if (nextObject == 'r' || nextObject == '!'  || isdigit(nextObject))
 		{
-			cout << "Alien finds an v arrow " << endl;
-			cout << "Alien's attack is increased by 20 " << endl;
-			addAttack(attributesValue);
-			nextObject = down(nextObject, attributesValue, boards);
-			if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
+			if (nextObject == 'r')
 			{
-				storeArrow = 'v';
+				cout << "Alien hits the rock !" << endl;
+				cout << "Hidden object under the rock !" << endl;
 			}
-		}
-		else if (nextObject == '<')
-		{
-			cout << "Alien finds an < arrow " << endl;
-			cout << "Alien's attack is increased by 20 " << endl;
-			addAttack(attributesValue);
-			nextObject = left(nextObject, attributesValue, boards);
-			if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
+			else if (nextObject == '!')
 			{
-				storeArrow = '<';
+				cout << "Alien hits the border !" << endl;
 			}
-		}
-		else if (nextObject == '>')
-		{
-			cout << "Alien finds an > arrow " << endl;
-			cout << "Alien's attack is increased by 20 " << endl;
-			addAttack(attributesValue);
-			nextObject = right(nextObject, attributesValue, boards);
-			if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p' || nextObject == '\0')
-			{
-				storeArrow = '>';
-			}
+
+			newScreen();
+			cout << "Alien's turn end. Trail and attack reset." << endl;
+			trail(); attackReset();
+			pass = true;
+			cout << endl; 
+			Pause();
 		}
 
-		else if (nextObject == ' ' || nextObject == '.')
+		else if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
 		{
             if (nextObject == ' ')
 			{
@@ -182,66 +195,106 @@ void checkObject(char& storeArrow, char &nextObject, int (&attributesValue)[][3]
 			{
 				cout << "Nothing here..." << endl;
 			}
+			else if (nextObject == 'h')
+			{
+				cout << "Alien finds a health pack !" << endl;
+				cout << "Alien's health increase by 20." << endl;
+				addHealth();
+			}
+			else if (nextObject == 'p')
+			{
+				cout << "Alien finds a pod !" << endl;
+				cout << "Alien causes 10 damage to Zombie " << nearest() <<  endl;
+				pod();
+			}
+			
+			newScreen();
 
 			if (storeArrow == '^')
 			{
-				nextObject = up(nextObject, attributesValue, boards);
+				up();
 			}
 			else if (storeArrow == 'v')
 			{
-				nextObject = down(nextObject, attributesValue, boards);
+				down();
 			}
 			else if (storeArrow == '<')
 			{
-				nextObject = left(nextObject, attributesValue, boards);
+				left();
 			}
 			else if (storeArrow == '>')
 			{
-				nextObject = right(nextObject, attributesValue, boards);
+				right();
 			}
 		}
 
-		Pause();
-		cout << endl;
-
-        if (nextObject == 'r' || nextObject == 'h' || nextObject == 'p' || isdigit(nextObject))
-        {
-            cout << "Alien finds a new objects !" << endl;
-            Pause();
-            break;
-        }
-
-		if (nextObject == '\0')
+		if (nextObject == '^' || nextObject == 'v' || nextObject == '<' || nextObject == '>')
 		{
-			cout << "Alien hits the border !" << endl;
-			Pause();
-            break;
+			cout << "Alien finds an " << nextObject << " arrow " << endl;
+			cout << "Alien's attack is increased by 20 " << endl;
+			addAttack();
+
+			newScreen();
+
+			if (nextObject == '^')
+			{
+				up();
+				if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
+				{
+					storeArrow = '^';
+				}
+			}
+			else if (nextObject == 'v')
+			{
+				down();
+				if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
+				{
+					storeArrow = 'v';
+				}
+			}
+			else if (nextObject == '<')
+			{
+				left();
+				if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p')
+				{
+					storeArrow = '<';
+				}
+			}
+			else if (nextObject == '>')
+			{
+				right();
+				if (nextObject == ' ' || nextObject == '.' || nextObject == 'h' || nextObject == 'p' || nextObject == '!')
+				{
+					storeArrow = '>';
+				}
+			}
 		}
-	}while (nextObject != '\0');
+
+	}while (!pass && win == false && lose == false);
 }
 
-void commandDirection(char& storeArrow, char nextObject, string kcommand, int (&attributesValue)[][3], vector < vector<char> >& boards)
+void Game::commandDirection()
 {
 	if (kcommand == "up")
     {
-		storeArrow = '^';
-		nextObject = up(nextObject, attributesValue, boards);
+		storeArrow = '^';	// use when 'h', 'p', ' ', '.'
+		up();
     }
     else if (kcommand == "down")
     {
 		storeArrow = 'v';
-		nextObject = down(nextObject, attributesValue, boards);
+		down();
     }
     else if (kcommand == "left")
     {
 		storeArrow = '<';
-		nextObject = left(nextObject, attributesValue, boards);
+		left();
     }
     else if (kcommand == "right")
     {
 		storeArrow = '>';
-		nextObject = right(nextObject, attributesValue, boards);
+		right();
     }
 	
-	checkObject(storeArrow, nextObject, attributesValue, boards);
+	checkObject();
 }
