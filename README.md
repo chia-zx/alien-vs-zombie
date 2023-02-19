@@ -37,8 +37,7 @@ left   : Move left
 right  : Move right
 arrow  : Change direction of an arrow
 help   : Display command list
-save   : Save game   
-load   : Load previous game  
+save   : Save game
 quit   : Quit game
 
 3. Game object:
