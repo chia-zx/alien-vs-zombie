@@ -31,14 +31,17 @@ Enter ‘help’ to look for the command.
 Giving an incorrext command, will also lead you to the command list
 
 Command list: 
-up     : Move up
-down   : Move down
-left   : Move left
-right  : Move right
-arrow  : Change direction of an arrow
-help   : Display command list
-save   : Save game
-quit   : Quit game
+up      :  Move up
+down    :  Move down
+left    :  Move left
+right   :  Move right
+arrow   :  Change direction of an arrow
+shuffle :  Shuffle board
+freeze  :  Freeze all Zombie
+help    :  Display command list
+save    :  Save game
+load    :  Load previous game
+quit    :  Quit game
 
 3. Game object:
 
@@ -56,6 +59,8 @@ Zombie  : any integer
 - When the Alien hits the border, it will stop.
 - When the Alien finds a new object(h, p, r) it will stop.
 - Enter row, column and direction to change the direction of the arrow to the direction that you want.
+- Enter freeze to pause the zombie movement.
+- Enter shuffle to shuffle object inside the board.
 - Enter save to save the game.
 - Enter quit to quit the game.
 
