@@ -1,10 +1,9 @@
 #include "h/other.h"
 #include <iostream>
-#include <vector>
 #include <iomanip>
 using namespace std;
 
-void Game::objects(const int& numOfZombie, vector < vector<char> >& boards)
+void Game::objects()
 {
     char objects[] = {'^', 'v', '<', '>', 'h', 'p', 'r', ' ','Z'};
     int noOfObjects = sizeof(objects);
@@ -18,8 +17,9 @@ void Game::objects(const int& numOfZombie, vector < vector<char> >& boards)
     int centerRow = (rows + 1) / 2;
     int centerColumns = (columns + 1) / 2;
 
-	int k = numOfZombie;
-	while (k != 0)      // to make sure all zombie is being assigned
+    // put random characters into vector array
+    int k = numOfZombie;
+    while (k != 0)      // to make sure all zombie is being assigned
     {
         k = numOfZombie;
 	    char z = '1';
@@ -60,7 +60,7 @@ void Game::displayBoard()
     cout << endl << "   ";
     for (int n = 0; n < columns; ++n)
     {
-        cout << " " << (n + 1) / 10; 
+        cout << "  " << (n + 1) / 10 << " "; 
     }
     cout << endl;
 
@@ -68,7 +68,7 @@ void Game::displayBoard()
     cout << "   ";
     for (int n = 0; n < columns; ++n)
     {
-        cout << " " << (n + 1) % 10;
+        cout << "  " << (n + 1) % 10 << " ";
     }
     cout << endl;
 
@@ -77,15 +77,15 @@ void Game::displayBoard()
         cout << "   ";
         for (int j = 0; j < columns; ++j)   // upper border for each row
         {
-            cout << "+-";
+            cout << "+---";
         }
         cout << "+" << endl;
 
-        cout << left << setw(3) << i + 1;   // display row number
+        cout << std::left << std::setw(3) << i + 1;   // display row number
 
         for (int k = 0; k < columns; ++k)   // objects and border of each column
         {
-            cout << "|" << boards[i][k];
+            cout << "| " << boards[i][k] << " ";
         }
         cout << "|" << endl;
     }
@@ -93,7 +93,7 @@ void Game::displayBoard()
     cout << "   ";
     for (int j = 0; j < columns; ++j)   // lowest row border 
     {
-        cout << "+-";
+        cout << "+---";
     }
     cout << "+" << endl;
 
