@@ -19,36 +19,39 @@ void Game::objects(const int& numOfZombie, vector < vector<char> >& boards)
     int centerColumns = (columns + 1) / 2;
 
 	int k = numOfZombie;
-	char z = '1';
-    // put random characters into vector array
-    for (int i = 0; i < rows; ++i)
+	while (k != 0)      // to make sure all zombie is being assigned
     {
-        for (int j = 0; j < columns; ++j)
+        k = numOfZombie;
+	    char z = '1';
+        for (int i = 0; i < rows; ++i)
         {
-            int randomNum = rand() % noOfObjects;
-            if ((i == centerRow - 1) && (j == centerColumns - 1))
+            for (int j = 0; j < columns; ++j)
             {
-                boards[i][j] = 'A';
-            }
-            else if (randomNum == 8 && k == 0)
-            {
-                --j;
-                continue;
-            }
-            else if (randomNum == 8 && k != 0)
-            {
-                boards[i][j] = z;
-                --k; ++z;
-            }
-            else
-            {
-                boards[i][j] = objects[randomNum];
+                int randomNum = rand() % noOfObjects;
+                if ((i == centerRow - 1) && (j == centerColumns - 1))
+                {
+                    boards[i][j] = 'A';
+                }
+                else if (randomNum == 8 && k == 0)
+                {
+                    --j;
+                    continue;
+                }
+                else if (randomNum == 8 && k != 0)
+                {
+                    boards[i][j] = z;
+                    --k; ++z;
+                }
+                else
+                {
+                    boards[i][j] = objects[randomNum];
+                }
             }
         }
     }
 }
 
-void Game::displayBoard(vector < vector<char> >& boards)
+void Game::displayBoard()
 {
     ClearScreen();
 
