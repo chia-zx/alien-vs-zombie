@@ -1,6 +1,6 @@
 # Alien vs. Zombie
 
-<img title="alien vs zombie" alt="program" src="/h/image.png">
+<img title="alien vs zombie" alt="program" src="/h/images.png">
 
 Alien vs Zombie is a game that alien(user) will victory after defeating all the zombie. 
 Before getting into the gmae, user have the chance to change the number of rows, columns and zombie.
