@@ -298,3 +298,4 @@ void Game::commandDirection()
 	
 	checkObject();
 }
+
