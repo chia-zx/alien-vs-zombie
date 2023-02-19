@@ -52,6 +52,8 @@ Pod     : p
 Rock    : r
 Alien   : A
 Zombie  : any integer
+shuffle : shuffle
+freeze  : freeze
 
 4. How to play:
 - Enter up, down, left, right to control the movement of the Alien(A).
