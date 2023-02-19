@@ -24,7 +24,7 @@ void command(char& storeArrow,char &nextObject, int (&attributesValue)[][3], vec
     }
     else if (kcommand == "save")
     {
-		stillImplementing();
+		save();
     }
     else if (kcommand == "load")
     {
